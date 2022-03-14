@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"encoding/json"
 	"io/ioutil"
 )
 
@@ -18,13 +18,31 @@ type (
 func getVideos() (videos []video) {
 
 	fileBytes, err := ioutil.ReadFile("./videos.json")
+
 	if err != nil {
 		panic(err)
 	}
 
-	fileContent := string(fileBytes)
+	err = json.Unmarshal(fileBytes, &videos)
 
-	fmt.Printf(fileContent)
+	if err != nil {
+		panic(err)
+	}
 
-	return nil
+	return videos
+}
+
+func saveVideos() (videos []video) {
+
+	videoBytes, err := json.Marshal(videos)
+
+	if err != nil {
+		panic(err)
+	}
+
+	err = ioutil.WriteFile("./videos-updated.json", videoBytes, 0644)
+
+	if err != nil {
+		panic(err)
+	}
 }
