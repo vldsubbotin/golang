@@ -6,8 +6,8 @@ import (
 	"log"
 )
 
-func main() {
-	content, err := ioutil.ReadFile("testdata/hello")
+func readData() {
+	content, err := ioutil.ReadFile("./hello")
 	if err != nil {
 		log.Fatal(err)
 	}
